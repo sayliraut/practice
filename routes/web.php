@@ -5,8 +5,11 @@ use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
-
-Route::get('/', [DashboardController::class, 'index'])->name('index');
+Route::get('/', function () {
+    return redirect('/dashboard');
+});
+    //*******************************************************manage users********************************************************
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
 Route::get('/add_user', [DashboardController::class, 'add'])->name('add_user');
 Route::get('/get-cities/{stateId}', [DashboardController::class, 'getCities']);
 Route::post('/store_user', [DashboardController::class, 'store_user']);
