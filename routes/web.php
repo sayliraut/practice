@@ -17,6 +17,8 @@ Route::get('/view_user/{id}', [DashboardController::class, 'viewUser'])->name('v
 Route::get('/edit_user/{id}', [DashboardController::class, 'edit_user']);
 Route::post('/update_user', [DashboardController::class, 'update_user'])->name('update_user');
 Route::delete('/delete_user/{id}', [DashboardController::class, 'delete_user']);
+Route::post('/export_selected_user', [DashboardController::class, 'exportSelectedUSer'])->name('export-selected-user');
+
 
 
 

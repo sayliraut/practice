@@ -8,6 +8,7 @@ use App\Models\IamPrincipal;
 use App\Models\ProfessionDetail;
 use App\Models\Skill;
 use App\Models\State;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\UploadCerticates;
 use App\Models\UserSkills;
 use Illuminate\Http\Request;
@@ -272,6 +273,35 @@ class DashboardController extends Controller
             DB::rollBack();
             Log::error("Delete user function Load Failed " . $e->getMessage());
             return response()->json(['success' => false, 'status' => 500, 'message' => __('auth.something_went_wrong')]);
+        }
+    }
+
+
+    public function exportSelectedUSer(Request $request)
+    {
+        dd($request->all());
+        try {
+            if ($request->has('all_id')) {
+                // return Excel::download(new customer_export, 'customer_data.xlsx');
+            }
+
+            $ids = $request->selected_id;
+
+
+            if (empty($ids)) {
+                return response()->json(['error' => 'No IDs provided for export.'], 400);
+            }
+
+            // Log::info("Selected IDs for export: " . $ids);
+
+            $fileName = 'selected_customer_data.xlsx';
+
+            Log::info("Attempting to export selected customers to file: " . $fileName);
+
+            // return Excel::download(new customer_export_selected($ids), $fileName);
+        } catch (\Exception $e) {
+            Log::error('Export failed: ' . $e->getMessage());
+            return response()->json(['error' => 'Export failed. Something went wrong.'], 500);
         }
     }
 }
