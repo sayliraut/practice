@@ -9,6 +9,9 @@ use App\Models\ProfessionDetail;
 use App\Models\Skill;
 use App\Models\State;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use App\Models\UploadCerticates;
 use App\Models\UserSkills;
 use Illuminate\Http\Request;
@@ -277,28 +280,60 @@ class DashboardController extends Controller
     }
 
 
-    public function exportSelectedUSer(Request $request)
+    public function exportSelectedUser(Request $request)
     {
-        dd($request->all());
         try {
-            if ($request->has('all_id')) {
-                // return Excel::download(new customer_export, 'customer_data.xlsx');
-            }
-
-            $ids = $request->selected_id;
-
+            // Check if 'all_id' or 'selected_id' is provided
+            $ids = $request->input('all_id') ?? $request->input('user_ids');
 
             if (empty($ids)) {
                 return response()->json(['error' => 'No IDs provided for export.'], 400);
             }
 
-            // Log::info("Selected IDs for export: " . $ids);
+            // Fetch the data you want to export based on the IDs
+            if ($request->input('all_id')) {
+                $users = IamPrincipal::all();
+            } else {
+                $users = IamPrincipal::whereIn('id', $ids)->get();
+            }
+            // Create a new Spreadsheet object
+            $spreadsheet = new Spreadsheet();
+            $sheet = $spreadsheet->getActiveSheet();
+
+            // Set the headers in the first row
+            $sheet->setCellValue('A1', 'ID');
+            $sheet->setCellValue('B1', 'Name');
+            $sheet->setCellValue('C1', 'Date of Birth');
+            $sheet->setCellValue('D1', 'Email');
+            $sheet->setCellValue('E1', 'Created At');
+
+            // Fill in the data
+            $row = 2;
+            foreach ($users as $user) {
+                $sheet->setCellValue('A' . $row, $user->id);
+                $sheet->setCellValue('B' . $row, $user->name);
+                $sheet->setCellValue('C' . $row, $user->date_of_birth);
+                $sheet->setCellValue('D' . $row, $user->email_address);
+                $sheet->setCellValue('E' . $row, $user->created_at);
+                $row++;
+            }
+
+            // Create a writer to output the spreadsheet
+            $writer = new Xlsx($spreadsheet);
+
+            // Stream the file as a download
+            $response = new StreamedResponse(function () use ($writer) {
+                $writer->save('php://output');
+            });
 
             $fileName = 'selected_customer_data.xlsx';
 
-            Log::info("Attempting to export selected customers to file: " . $fileName);
+            // Prepare the response headers
+            $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            $response->headers->set('Content-Disposition', 'attachment;filename="' . $fileName . '"');
+            $response->headers->set('Cache-Control', 'max-age=0');
 
-            // return Excel::download(new customer_export_selected($ids), $fileName);
+            return $response;
         } catch (\Exception $e) {
             Log::error('Export failed: ' . $e->getMessage());
             return response()->json(['error' => 'Export failed. Something went wrong.'], 500);
