@@ -65,7 +65,8 @@
                                                 <div
                                                     class="form-check form-check-sm form-check-custom form-check-solid">
                                                     <input class="form-check-input restaurant-checkbox" type="checkbox"
-                                                        name="user_ids" value="{{ $user->id }}" />
+                                                        name="user_ids[]" value="{{ $user->id }}" />
+
                                                 </div>
                                             </td>
                                             <td class="text-center">{{ $count }}</td>
@@ -158,13 +159,13 @@
 
         $(document).ready(function() {
             var exportButton = `
-            <div class="dropdown-menu">
-                <button>
-                    <a class="extra-btn width-max-content" href="{{ route('add_user') }}">Add</a>
-                </button>
-                <button type="button"  id="download_all">Download Overview</button>
-                <button type="button" id="download-selected">Download Selected</button>
-            </div>
+    <div class="dropdown-menu">
+        <button>
+            <a class="extra-btn width-max-content" href="{{ route('add_user') }}">Add</a>
+        </button>
+        <button type="button" id="download_all">Download Overview</button>
+        <button type="button" id="download-selected">Download Selected</button>
+    </div>
     `;
 
             $(exportButton).insertBefore("#zero-config_filter");
@@ -187,9 +188,7 @@
                 $('#all_id').prop('disabled', false);
                 $('#ids').prop('disabled', true);
                 $('#user-form').submit();
-
-            })
-
+            });
 
             $(document).on("click", "#download-selected", function(e) {
                 e.preventDefault();
@@ -198,28 +197,31 @@
 
                 var table = $('#zero-config').DataTable();
                 for (var i = 0; i < table.page.info().pages; i++) {
-                    table.page(i).draw(false); 
+                    table.page(i).draw(false);
                     $('#zero-config tbody input:checked').each(function() {
                         allIds.push($(this).val());
                     });
                 }
 
                 if (allIds.length > 0) {
-                    // If there are selected customers
-                    $('#ids').prop('disabled', false);
+                    // Set the hidden input value to the selected IDs
+                    // $('<input>').attr({
+                    //     type: 'hidden',
+                    //     id: 'ids',
+                    //     name: 'user_ids[]',
+                    //     value: allIds.join(',')
+                    // }).appendTo('#user-form');
+
+                    // Submit the form
                     $('#all_id').prop('disabled', true);
-                    $('#ids').val(allIds);
-                    // Now submit the form or perform download action
                     $('#user-form').submit();
-                    //   console.log(allIds);
-                    //    return;
-                    // Or perform your download action here
                 } else {
-                    // No customers selected
                     toastr.error("Please select at least one customer to download.");
                 }
             });
         });
+
+
     </script>
 </body>
 
