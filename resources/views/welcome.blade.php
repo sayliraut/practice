@@ -1,21 +1,9 @@
-<html>
+@extends('Admin.layouts.master')
+@section('content')
+    @php
+        $currentPage = 'dashboard';
+    @endphp
 
-<head>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
-
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <style>
-        #delete-customer-user-modal {
-            display: none;
-        }
-    </style>
-</head>
-
-<body>
 
     <div class="layout-px-spacing">
         <div class="middle-content container-xxl p-0">
@@ -39,8 +27,7 @@
                                 <thead class="text-center">
                                     <tr>
                                         <th class="w-10px pe-2">
-                                            <div
-                                                class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                            <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
                                                 <input class="form-check-input" type="checkbox" id="select-all-ids" />
                                             </div>
                                         </th>
@@ -62,8 +49,7 @@
                                         @php($count++)
                                         <tr>
                                             <td>
-                                                <div
-                                                    class="form-check form-check-sm form-check-custom form-check-solid">
+                                                <div class="form-check form-check-sm form-check-custom form-check-solid">
                                                     <input class="form-check-input restaurant-checkbox" type="checkbox"
                                                         name="user_ids[]" value="{{ $user->id }}" />
 
@@ -81,17 +67,17 @@
                                             </td>
                                             <td class="actions text-center">
                                                 <a href="{{ url('/view_user/' . $user->id) }}">
-                                                    <img src="{{ asset('public/assets/css/light/img/view.svg') }}"
-                                                        alt="View" title="View" style="width: 20px;" />
+                                                    <img src="{{ asset('public/assets/img/view.svg') }}" alt="View"
+                                                        title="View" style="width: 20px;" />
                                                 </a>
                                                 <a href="{{ url('/edit_user/' . $user->id) }}">
-                                                    <img src="{{ asset('public/assets/css/light/img/edit.svg') }}"
-                                                        alt="Edit" title="Edit" style="width: 20px;" />
+                                                    <img src="{{ asset('public/assets/img/edit.svg') }}" alt="Edit"
+                                                        title="Edit" style="width: 20px;" />
                                                 </a>
                                                 <a href="#" class="delete-customer-user"
                                                     data-id="{{ $user->id }}" alt="Delete" title="Delete"
                                                     data-toggle="modal" data-target="#delete-customer-user-modal">
-                                                    <img src="{{ asset('public/assets/css/light/img/delete-recycle.svg') }}"
+                                                    <img src="{{ asset('public/assets/img/delete-recycle.svg') }}"
                                                         style="width: 20px;" />
                                                 </a>
                                             </td>
@@ -124,18 +110,8 @@
             </div>
         </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-
+@endsection
+@section('section_script')
     <script>
         $('#zero-config').DataTable({
             "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
@@ -167,6 +143,12 @@
         <button type="button" id="download-selected">Download Selected</button>
     </div>
     `;
+
+            $(document).ready(function() {
+                $('<button><a class="extra-btn width-max-content" href="{{ route('add_user') }}">Add</a></button><button><ul class="navbar-item flex-row ms-lg-auto ms-0"><li class="nav-item dropdown action-dropdown  order-lg-0 order-1"><a href="javascript:void(0);"class="nav-link dropdown-toggle user extra-btn" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><div class="avatar-container"><div class="avatar avatar-sm avatar-indicators avatar-online"><h3>Export</h3></div></div></a><div class="dropdown-menu position-absolute" aria-labelledby="actionDropdown"><div class="dropdown-item"><a href="javascript:void(0)" id="download_all"><span>Download Overview</span></a></div><div class="dropdown-item"><a href="javascript:void(0)" id="download-selected"><span id="export">Download Selected</span></a></div></div></li></ul></button>')
+                    .insertBefore("#zero-config_filter label");
+            });
+
 
             $(exportButton).insertBefore("#zero-config_filter");
 
@@ -220,9 +202,5 @@
                 }
             });
         });
-
-
     </script>
-</body>
-
-</html>
+@endsection

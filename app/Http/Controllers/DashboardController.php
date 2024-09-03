@@ -24,7 +24,7 @@ class DashboardController extends Controller
     public function index()
     {
         try {
-            $users = IamPrincipal::with(['state', 'city'])->latest()->get();
+            $users = IamPrincipal::with(['state', 'city'])->where('principal_type_xid', 2)->latest()->get();
             return view('welcome', compact('users'));
         } catch (Exception $e) {
             Log::error("Dashboard Page Load Failed: " . $e->getMessage());
@@ -73,6 +73,7 @@ class DashboardController extends Controller
             $user->city_xid = $request['city_xid'];
             $user->email_address = $request['email'];
             $user->phone_number = $request['mobile'];
+            $user->principal_type_xid = 2;
 
             // Save the profile image
             if ($request->hasFile('image')) {
@@ -283,31 +284,30 @@ class DashboardController extends Controller
     public function exportSelectedUser(Request $request)
     {
         try {
-            // Check if 'all_id' or 'selected_id' is provided
             $ids = $request->input('all_id') ?? $request->input('user_ids');
 
             if (empty($ids)) {
                 return response()->json(['error' => 'No IDs provided for export.'], 400);
             }
 
-            // Fetch the data you want to export based on the IDs
             if ($request->input('all_id')) {
                 $users = IamPrincipal::all();
             } else {
                 $users = IamPrincipal::whereIn('id', $ids)->get();
             }
+
             // Create a new Spreadsheet object
             $spreadsheet = new Spreadsheet();
             $sheet = $spreadsheet->getActiveSheet();
 
-            // Set the headers in the first row
+            // Set the headers
             $sheet->setCellValue('A1', 'ID');
             $sheet->setCellValue('B1', 'Name');
             $sheet->setCellValue('C1', 'Date of Birth');
             $sheet->setCellValue('D1', 'Email');
             $sheet->setCellValue('E1', 'Created At');
 
-            // Fill in the data
+            // Fill the data
             $row = 2;
             foreach ($users as $user) {
                 $sheet->setCellValue('A' . $row, $user->id);
