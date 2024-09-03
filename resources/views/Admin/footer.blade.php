@@ -1,7 +1,4 @@
 <div class="footer-wrapper">
-    <div class="footer-section f-section-1">
-        <p class="">Copyright © <span class="dynamic-year">2024</span>All rights reserved.</p>
-    </div>
 </div>
 <script src="../layouts/modern-light-menu/loader.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
