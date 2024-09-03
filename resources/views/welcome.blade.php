@@ -134,15 +134,7 @@
         });
 
         $(document).ready(function() {
-            var exportButton = `
-    <div class="dropdown-menu">
-        <button>
-            <a class="extra-btn width-max-content" href="{{ route('add_user') }}">Add</a>
-        </button>
-        <button type="button" id="download_all">Download Overview</button>
-        <button type="button" id="download-selected">Download Selected</button>
-    </div>
-    `;
+           
 
             $(document).ready(function() {
                 $('<button><a class="extra-btn width-max-content" href="{{ route('add_user') }}">Add</a></button><button><ul class="navbar-item flex-row ms-lg-auto ms-0"><li class="nav-item dropdown action-dropdown  order-lg-0 order-1"><a href="javascript:void(0);"class="nav-link dropdown-toggle user extra-btn" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><div class="avatar-container"><div class="avatar avatar-sm avatar-indicators avatar-online"><h3>Export</h3></div></div></a><div class="dropdown-menu position-absolute" aria-labelledby="actionDropdown"><div class="dropdown-item"><a href="javascript:void(0)" id="download_all"><span>Download Overview</span></a></div><div class="dropdown-item"><a href="javascript:void(0)" id="download-selected"><span id="export">Download Selected</span></a></div></div></li></ul></button>')
@@ -150,7 +142,6 @@
             });
 
 
-            $(exportButton).insertBefore("#zero-config_filter");
 
             $("#select-all-ids").click(function() {
                 $(".form-check-input").prop('checked', $(this).prop('checked'));
@@ -186,19 +177,58 @@
                 }
 
                 if (allIds.length > 0) {
-                    // Set the hidden input value to the selected IDs
-                    // $('<input>').attr({
-                    //     type: 'hidden',
-                    //     id: 'ids',
-                    //     name: 'user_ids[]',
-                    //     value: allIds.join(',')
-                    // }).appendTo('#user-form');
-
-                    // Submit the form
                     $('#all_id').prop('disabled', true);
                     $('#user-form').submit();
                 } else {
                     toastr.error("Please select at least one customer to download.");
+                }
+            });
+        });
+
+
+        $(document).on('click', '.delete-customer-user', function(e) {
+
+            var userId = $(this).data('id');
+
+            $('#customer_delete').val(userId);
+
+            $('#delete-customer-user-modal').modal('show');
+        });
+
+
+        $(document).on('click', '#delete_customer_user', function(e) {
+            var userId = $('#customer_delete').val();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            var url_path = "{{ url('/') }}";
+            var base_url = url_path;
+
+
+            $.ajax({
+                url: url_path + '/delete_user/' + userId,
+                type: 'delete',
+
+                success: function(result) {
+                    if (result.status == 200) {
+                        toastr.success('User Deleted Successfully');
+                        $('#delete-customer-user-modal').modal('hide');
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1000);
+                    } else {
+                        toastr.error(result.message);
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1000);
+                    }
+                },
+                error: function(xhr) {
+                    toastr.error('Something Went Wrong');
                 }
             });
         });

@@ -266,12 +266,9 @@ class DashboardController extends Controller
     {
         try {
             DB::beginTransaction();
-
             $user = IamPrincipal::find($id);
-
             $user->delete();
             DB::commit();
-
             return response()->json(['success' => true, 'status' => 200]);
         } catch (Exception $e) {
             DB::rollBack();
