@@ -3,18 +3,27 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
-class IamPrincipal extends Model
+
+class IamPrincipal extends Authenticatable
+//  implements JWTSubject
 {
     use HasFactory;
+    use SoftDeletes;
 
 
     protected $table = 'iam_principal';
 
     protected $fillable = [
         'id',
+        'principal_type_xid',
+        'password',
         'name',
         'email_address',
         'gender',
@@ -23,7 +32,6 @@ class IamPrincipal extends Model
         'profile_photo',
         'state_xid',
         'city_xid',
-        'phone_number',
         'is_active',
     ];
 
@@ -36,6 +44,12 @@ class IamPrincipal extends Model
     {
         return $this->belongsTo(City::class, 'city_xid', 'id');
     }
+
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
 }
 
 

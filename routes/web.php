@@ -1,30 +1,42 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ManageProfileController;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
 Route::get('/', function () {
-    return redirect('/dashboard');
+    return redirect('/admin/login');
 });
-    //*******************************************************manage users********************************************************
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
-Route::get('/add_user', [DashboardController::class, 'add'])->name('add_user');
-Route::get('/get-cities/{stateId}', [DashboardController::class, 'getCities']);
-Route::post('/store_user', [DashboardController::class, 'store_user']);
-Route::get('/view_user/{id}', [DashboardController::class, 'viewUser'])->name('view_user');
-Route::get('/edit_user/{id}', [DashboardController::class, 'edit_user']);
-Route::post('/update_user', [DashboardController::class, 'update_user'])->name('update_user');
-Route::delete('/delete_user/{id}', [DashboardController::class, 'delete_user']);
-Route::post('/export_selected_user', [DashboardController::class, 'exportSelectedUSer'])->name('export-selected-user');
 
 
 
+Route::get('/admin/login', [LoginController::class, 'index'])->name('login');
+
+Route::post('/check_login', [LoginController::class, 'login_check']);
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
+//*******************************************************manage users********************************************************
+
+Route::group(['middleware' => ['checkStatus']], function () {
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
+    Route::get('/add_user', [DashboardController::class, 'add'])->name('add_user');
+    Route::get('/get-cities/{stateId}', [DashboardController::class, 'getCities']);
+    Route::post('/store_user', [DashboardController::class, 'store_user']);
+    Route::get('/view_user/{id}', [DashboardController::class, 'viewUser'])->name('view_user');
+    Route::get('/edit_user/{id}', [DashboardController::class, 'edit_user']);
+    Route::post('/update_user', [DashboardController::class, 'update_user'])->name('update_user');
+    Route::delete('/delete_user/{id}', [DashboardController::class, 'delete_user']);
+    Route::post('/export_selected_user', [DashboardController::class, 'exportSelectedUSer'])->name('export-selected-user');
+
+//*******************************************************manage profile********************************************************
+
+    Route::get('/profile', [ManageProfileController::class, 'index'])->name('profile');
+    Route::post('/update_profile', [ManageProfileController::class, 'update_profile'])->name('update.profile');
 
 
-
-
-
+});

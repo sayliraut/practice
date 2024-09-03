@@ -45,3 +45,35 @@ if (!function_exists('jsonResponseWithSuccessMessage')) {
     }
 }
 }
+
+if (!function_exists('saveSingleImageWithoutCrop')) {
+    function saveSingleImageWithoutCrop($image, $path, $image_db = null)
+    {
+        $thumbnail = '';
+
+        if (!empty($image)) {
+            // Define the folder path where the image will be stored
+            $folderPath = storage_path('app/public/uploads/' . $path . '/');
+
+            // Generate a unique image name
+            $imageName = uniqid() . '.png';
+
+            // Move the uploaded image to the specified folder
+            $image->move($folderPath, $imageName);
+
+            // If there was a previous image, delete it
+            if (!empty($image_db)) {
+                $previousImagePath = $folderPath . $image_db;
+                if (file_exists($previousImagePath)) {
+                    unlink($previousImagePath);
+                }
+            }
+
+            $thumbnail = $imageName;
+        } elseif (!empty($image_db)) {
+            $thumbnail = $image_db;
+        }
+
+        return $thumbnail;
+    }
+}
