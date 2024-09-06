@@ -50,6 +50,32 @@ class IamPrincipal extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    public function getPermissionGranted($id, $module)
+    {
+        $isSubAdmin = IamPrincipal::where('id', $id)->where('principal_type_xid', 3)->first();
+
+        $isMainAdmin = IamPrincipal::where('id', $id)->where('principal_type_xid', 1)->first();
+        if ($isMainAdmin) {
+            return true;
+        } elseif ($isSubAdmin) {
+            $isModule = ManageModule::where('slug', $module)->first();
+            if ($isModule) {
+                $isSubAdminModuleLink = ManageModuleLink::where('principal_xid', $id)
+                    ->where('manage_modules_xid', $isModule->id)->first();
+                if ($isSubAdminModuleLink) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }
 
 

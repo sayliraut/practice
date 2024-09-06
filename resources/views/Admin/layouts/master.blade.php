@@ -52,6 +52,8 @@
         <ul>
             <div class="active-tab"></div>
 
+            @if (Auth::guard('admin')->user()->getPermissionGranted(Auth::guard('admin')->user()->id, 'dashboard'))
+
             <li class="tooltip-element <?php
             if ($currentPage == 'dashboard') {
                 echo 'active';
@@ -64,6 +66,27 @@
                     </div>
                 </a>
             </li>
+            @endif
+
+        </ul>
+    </div>
+    <div class="sidebar-links" style="overflow: scroll;">
+        <ul>
+            <div class="active-tab"></div>
+            @if (Auth::guard('admin')->user()->getPermissionGranted(Auth::guard('admin')->user()->id, 'sub-admins'))
+            <li class="tooltip-element <?php
+            if ($currentPage == 'sub-admins') {
+                echo 'active';
+            }
+            ?>" data-tooltip="0">
+                <a href="{{ route('manage.subAdmin') }}" data-active="0">
+                    <div class="icons">
+                        <img src="{{ asset('public/assets/img/Group 57904.svg') }}" />
+                        <span class="text">Sub Admins</span>
+                    </div>
+                </a>
+            </li>
+            @endif
         </ul>
     </div>
 

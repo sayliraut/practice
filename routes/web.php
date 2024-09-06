@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ManageProfileController;
+use App\Http\Controllers\ManageSubAdminController;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -33,10 +34,16 @@ Route::group(['middleware' => ['checkStatus']], function () {
     Route::delete('/delete_user/{id}', [DashboardController::class, 'delete_user']);
     Route::post('/export_selected_user', [DashboardController::class, 'exportSelectedUSer'])->name('export-selected-user');
 
-//*******************************************************manage profile********************************************************
+    //*******************************************************manage profile********************************************************
 
     Route::get('/profile', [ManageProfileController::class, 'index'])->name('profile');
     Route::post('/update_profile', [ManageProfileController::class, 'update_profile'])->name('update.profile');
+
+    //*******************************************************manage subadmin********************************************************
+    
+    Route::get('/manage-sub-admin', [ManageSubAdminController::class, 'index'])->name('manage.subAdmin');
+    Route::get('/create_sub_admin', [ManageSubAdminController::class, 'create'])->name('manage.sub_admin_create');
+    Route::post('/insert_sub_admin', [ManageSubAdminController::class, 'store_subadmin']);
 
 
 });
