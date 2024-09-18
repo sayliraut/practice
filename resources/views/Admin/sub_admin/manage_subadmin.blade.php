@@ -65,6 +65,13 @@
                                                         </a>
                                                     </li>
                                                     <li>
+                                                        <a href="{{ url('/subadmin_users_mail', $sub_admins->id) }}"
+                                                            class="subs-btn">
+                                                            <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                                            <span>Message</span>
+                                                        </a>
+                                                    </li>
+                                                    <li>
                                                         <a href="" data-toggle="modal" data-target="#delete-modal"
                                                             class="admin_delete_btn" data-id="{{ $sub_admins->id }}">
                                                             <img
@@ -168,6 +175,36 @@
         $(document).ready(function() {
             $('<button><a class="extra-btn width-max-content" href="{{ route('manage.sub_admin_create') }}">Add</a></button>')
                 .insertBefore("#zero-config_filter label");
+        });
+
+        $(".sub_admin_permission").click(function() {
+            var id = $(this).data("id");
+            let base_url = url_path;
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: base_url + '/get_sub_admin_permission',
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    if (data.success && data.data) {
+                        // Uncheck all checkboxes
+                        $("#premission-modal input[name='module_id[]']").prop("checked", false);
+                        // Loop through each response data
+                        $.each(data.data, function(index, permission) {
+                            $("#premission-modal input[name='module_id[]'][value='" + permission
+                                .manage_modules_xid + "']").prop("checked", true);
+                            $('#premission-modal').modal('show');
+                        });
+                    }
+                },
+            });
         });
     </script>
 @endsection
