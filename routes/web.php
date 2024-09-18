@@ -40,10 +40,11 @@ Route::group(['middleware' => ['checkStatus']], function () {
     Route::post('/update_profile', [ManageProfileController::class, 'update_profile'])->name('update.profile');
 
     //*******************************************************manage subadmin********************************************************
-    
+
     Route::get('/manage-sub-admin', [ManageSubAdminController::class, 'index'])->name('manage.subAdmin');
     Route::get('/create_sub_admin', [ManageSubAdminController::class, 'create'])->name('manage.sub_admin_create');
     Route::post('/insert_sub_admin', [ManageSubAdminController::class, 'store_subadmin']);
-
-
+    Route::get('/get_sub_admin_permission', [ManageSubAdminController::class, 'get_sub_admin_permission']);
+    Route::get('/subadmin_users_mail/{id}', [ManageSubAdminController::class, 'SubAdminUsersMailView'])->name('subadmin.mailUser');
+    Route::get('/edit_sub_admin/{id}', [ManageSubAdminController::class, 'edit'])->name('sub_admin_edit');
 });

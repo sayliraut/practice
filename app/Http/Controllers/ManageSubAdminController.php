@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Add_Subadmin;
 use App\Models\IamPrincipal;
 use App\Models\ManageModule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -20,9 +22,10 @@ class ManageSubAdminController extends Controller
     public function index()
     {
         $sub_admins_module = ManageModule::latest()->get();
+        // return $sub_admins_module;
         $sub_admins_data = IamPrincipal::where('principal_type_xid', 3)->latest()->get();
 
-        return view('Admin.sub_admin.manage_subadmin', compact('sub_admins_data','sub_admins_module'));
+        return view('Admin.sub_admin.manage_subadmin', compact('sub_admins_data', 'sub_admins_module'));
     }
 
     public function create()
@@ -74,7 +77,7 @@ class ManageSubAdminController extends Controller
                 'password' => $request->input('password'),
             ];
 
-            // Mail::to($sub_admin->email_address)->send(new Add_Subadmin($mailData));
+            Mail::to($sub_admin->email_address)->send(new Add_Subadmin($mailData));
 
             DB::commit();
             return jsonResponseWithSuccessMessage(__('success.save_data'));
@@ -85,4 +88,20 @@ class ManageSubAdminController extends Controller
         }
     }
 
+    public function get_sub_admin_permission(Request $request)
+    {
+        $testing_admin_id = $request->id;
+        $test = ManageModuleLink::where('principal_xid', $testing_admin_id)->get('manage_modules_xid')->toArray();
+        return response()->json(['success' => true, 'data' => $test]);
+    }
+
+    public function AffliateUsersMailView($id)
+    {
+        $iamprinciapl = IamPrincipal::find($id);
+        $loginAdmin = auth()->guard('admin')->user();
+        // $dataAdmin = AffiliateContactAdmin::where('sender_id', $loginAdmin->id)->where('receiver_id', $iamprinciapl->id)->get();
+        // $messages = $dataAdmin->sortBy('created_at');
+        $affiliate_user = IamPrincipal::where('principal_type_xid', 3)->find($id);
+        return view('admin-dashboard.pages.manage-users.affiliate_users.affiliate_users_mail', compact('messages', 'affiliate_user'));
+    }
 }
