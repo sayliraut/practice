@@ -1,0 +1,25 @@
+@import url('../../../../../../static/static/src/assets/css/light/main.css');
+
+@import url('../../../../../../static/static/src/plugins/css/light/perfect-scrollbar/perfect-scrollbar.css');
+@import url('../../../../../../static/static/src/plugins/src/waves/waves.min.css');
+
+
+@import url('../../../../../../admin-dashboard/assets/css/layouts/css/light/structure.css');
+
+/*
+public\static\static\src\assets\css\light\main.css
+public\admin-dashboard\assets\css\layouts\css\light\structure.css
+public\static\static\src\plugins\src\waves\waves.min.css
+public\static\static\src\plugins\css\light\perfect-scrollbar\perfect-scrollbar.css
+
+    Importing highlight.js CSS code 
+
+    Just for demo purpose only
+	
+	@Note:-  monokai-sublime.css stylesheet is for highliting the code;
+    public/static/static/src/plugins/src/highlight/styles/monokai-sublime.css
+
+*/
+@import url('../../../../../../static/static/src/plugins/src/highlight/styles/monokai-sublime.css');
+
+

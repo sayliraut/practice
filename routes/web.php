@@ -47,4 +47,6 @@ Route::group(['middleware' => ['checkStatus']], function () {
     Route::get('/get_sub_admin_permission', [ManageSubAdminController::class, 'get_sub_admin_permission']);
     Route::get('/subadmin_users_mail/{id}', [ManageSubAdminController::class, 'SubAdminUsersMailView'])->name('subadmin.mailUser');
     Route::get('/edit_sub_admin/{id}', [ManageSubAdminController::class, 'edit'])->name('sub_admin_edit');
+    Route::POST('/submit-subadmin-users-mail', [ManageSubAdminController::class, 'submitSubadminResponse'])->name('submit-subadmin-users-mail');
+
 });

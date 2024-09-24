@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Validator;
 
 
 use App\Models\ManageModuleLink;
+use App\Models\SubadminContactAdmin;
 
 class ManageSubAdminController extends Controller
 {
@@ -95,13 +96,35 @@ class ManageSubAdminController extends Controller
         return response()->json(['success' => true, 'data' => $test]);
     }
 
-    public function AffliateUsersMailView($id)
+    public function SubAdminUsersMailView($id)
     {
         $iamprinciapl = IamPrincipal::find($id);
         $loginAdmin = auth()->guard('admin')->user();
-        // $dataAdmin = AffiliateContactAdmin::where('sender_id', $loginAdmin->id)->where('receiver_id', $iamprinciapl->id)->get();
-        // $messages = $dataAdmin->sortBy('created_at');
+        $dataAdmin = SubadminContactAdmin::where('sender_id', $loginAdmin->id)->where('receiver_id', $iamprinciapl->id)->get();
+        $messages = $dataAdmin->sortBy('created_at');
         $affiliate_user = IamPrincipal::where('principal_type_xid', 3)->find($id);
-        return view('admin-dashboard.pages.manage-users.affiliate_users.affiliate_users_mail', compact('messages', 'affiliate_user'));
+        return view('Admin.sub_admin.subadmin_users_mail', compact('messages', 'affiliate_user'));
+    }
+
+    public function submitSubadminResponse(Request $request)
+    {
+
+        try {
+
+            DB::beginTransaction();
+            $loginAdmin = auth()->guard('admin')->user();
+            $contactAdminResponse = new SubadminContactAdmin();
+            $contactAdminResponse->sender_id = $loginAdmin->id;
+            $contactAdminResponse->receiver_id = $request->receiver_id;
+            $contactAdminResponse->contact_admin_response = $request->contact_admin_response;
+            $contactAdminResponse->is_admin_response = 1;
+            $contactAdminResponse->save();
+            DB::commit();
+            return jsonResponseWithSuccessMessage(__('success.save_data'));
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error("Affiliate response controller function failed " . $e->getMessage());
+            return jsonResponseWithErrorMessage(__('auth.something_went_wrong'), 500);
+        }
     }
 }
