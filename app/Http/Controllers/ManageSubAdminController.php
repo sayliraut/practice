@@ -96,7 +96,7 @@ class ManageSubAdminController extends Controller
         return response()->json(['success' => true, 'data' => $test]);
     }
 
-    public function SubAdminUsersMailView($id)
+    public function AdminUsersMailView($id)
     {
         $iamprinciapl = IamPrincipal::find($id);
         $loginAdmin = auth()->guard('admin')->user();
@@ -124,6 +124,44 @@ class ManageSubAdminController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error("Affiliate response controller function failed " . $e->getMessage());
+            return jsonResponseWithErrorMessage(__('auth.something_went_wrong'), 500);
+        }
+    }
+
+
+    public function contactAdmin()
+    {
+        $loginAdmin = auth()->guard('admin')->user();
+
+        $iamprinciapl = IamPrincipal::find($loginAdmin->id);
+        $admin_user = IamPrincipal::where('principal_type_xid', 1)->first();
+        $dataAdmin = SubadminContactAdmin::where('sender_id', $admin_user->id)->where('receiver_id', $iamprinciapl->id)->get();
+        $messages = $dataAdmin->sortBy('created_at');
+
+        return view("Admin.sub_admin.contact_admin", compact('messages', 'admin_user'));
+    }
+
+
+    public function submitSubAdminContactAdminResponse(Request $request)
+    {
+
+        // dd($request->all());
+
+        try {
+            DB::beginTransaction();
+            // $loginAdminUser = auth()->guard('admin')->user();
+            $loginAdmin = auth()->guard('admin')->user();
+            $contactAdminResponse = new SubadminContactAdmin();
+            $contactAdminResponse->sender_id = $request->sender_id;
+            $contactAdminResponse->receiver_id = $loginAdmin->id;
+            $contactAdminResponse->affiliate_response = $request->affiliate_response;
+            $contactAdminResponse->is_affiliate_response = 0;
+            $contactAdminResponse->save();
+            DB::commit();
+            return jsonResponseWithSuccessMessage(__('success.save_data'));
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error("Affiliate Admin Contact Us controller Admin response function failed " . $e->getMessage());
             return jsonResponseWithErrorMessage(__('auth.something_went_wrong'), 500);
         }
     }

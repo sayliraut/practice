@@ -65,7 +65,7 @@
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="{{ url('/subadmin_users_mail', $sub_admins->id) }}"
+                                                        <a href="{{ url('/admin_users_mail', $sub_admins->id) }}"
                                                             class="subs-btn">
                                                             <i class="fa fa-envelope-o" aria-hidden="true"></i>
                                                             <span>Message</span>
@@ -147,8 +147,6 @@
 
 
 @section('section_script')
-    {{-- <script src="{{ asset('public/assets/js/admin/manage_customer/main.js')}}"></script>
-<script src="{{ asset('public/assets/js/admin/manage_sub_admin/main.js')}}"></script> --}}
 
     <script>
         $('#zero-config').DataTable({

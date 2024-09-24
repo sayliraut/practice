@@ -90,6 +90,26 @@
         </ul>
     </div>
 
+    <div class="sidebar-links" style="overflow: scroll;">
+        <ul>
+            <div class="active-tab"></div>
+            {{-- @if (Auth::guard('admin')->user()->getPermissionGranted(Auth::guard('admin')->user()->id, 'sub-admins')) --}}
+            <li class="tooltip-element <?php
+            if ($currentPage == 'contact-admin') {
+                echo 'active';
+            }
+            ?>" data-tooltip="0">
+                <a href="{{ route('subadmin.contact.admin') }}" data-active="0">
+                    <div class="icons">
+                        <img src="{{ asset('public/assets/img/Group 57904.svg') }}" />
+                        <span class="text">Contact Admin</span>
+                    </div>
+                </a>
+            </li>
+            {{-- @endif --}}
+        </ul>
+    </div>
+
 </nav>
 <!-- BEGIN LOADER -->
 <div id="load_screen">

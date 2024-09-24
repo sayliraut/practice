@@ -31,7 +31,33 @@
     <link rel="stylesheet" type="text/css" href="{{asset('public/assets/plugins/src/table/datatable/datatables.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('public/assets/plugins/css/light/table/datatable/dt-global_style.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('public/assets/plugins/css/light/table/datatable/custom_dt_custom.css')}}">
-    <!-- added by abhishek -->
+    <script src={{ asset('public/assets/js/apps/chat.js') }}></script>
+    <script src={{ asset('public/assets/plugins/src/stepper/bsStepper.min.js') }}></script>
+    <script src={{ asset('public/assets/plugins/css/dark/stepper/custom-bsStepper.min.js') }}></script>
+    <script type="text/javascript" src={{ asset('public/assets/plugins/src/global/vendors.min.js') }}></script>
+    <script type="text/javascript" src={{ asset('public/assets/bootstrap/js/bootstrap.bundle.min.js') }}></script>
+    <script type="text/javascript" src={{ asset('public/assets/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js') }}>
+    <script type="text/javascript" src={{ asset('public/assets/plugins/src/mousetrap/mousetrap.min.js') }}></script>
+    <script type="text/javascript" src={{ asset('public/assets/plugins/src/waves/waves.min.js') }}>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.37.3/apexcharts.min.js">
+    <script src={{ asset('public/assets/plugins/src/filepond/FilePondPluginFileValidateType.min.js') }}>
+    <script src={{ asset('public/assets/plugins/src/filepond/FilePondPluginImageExifOrientation.min.js') }}>
+    <script src={{ asset('public/assets/plugins/src/filepond/FilePondPluginImagePreview.min.js') }}>
+    <script type="text/javascript" src={{ asset('public/admin-dashboard/assets/css/src/plugins/src/tagify/tagify.min.js') }}></script>
+
+    <link rel="stylesheet" type="text/css" href={{ asset('public/assets/plugins/src/stepper/bsStepper.min.css') }}>
+    <link rel="stylesheet" type="text/css" href={{ asset('public/assets/plugins/css/dark/stepper/custom-bsStepper.css') }}>
+
+
+
+
+
+
+
+
+
+
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
      <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
