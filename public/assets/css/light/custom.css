@@ -1626,3 +1626,118 @@ a.download-btn.reply-button:hover {
 .radio-btn label.label {
     margin: 0;
 }
+.widget-content {
+    padding: 15px !important;
+}
+
+.widget-content {
+    padding: 25px !important
+}
+
+.widget-content {
+    padding: 25px !important
+}
+.chatbox .chat_box>* {
+    padding: 16px;
+}
+
+.chatbox .head {
+    display: flex;
+    align-items: center;
+}
+
+.chatbox .chat-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+}
+
+.chatbox .head .user {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    gap: 10px;
+}
+
+.chatbox .head .user .avatar {
+    margin-right: 8px;
+}
+
+.chatbox .head .user .avatar img {
+    display: block;
+    border-radius: 50%;
+}
+
+.chatbox .chat-body {
+    flex-grow: 1;
+    background-color: #FFFFFF;
+    box-shadow: 0px 3px 3px 0px #68686829;
+    border-radius: 10px;
+}
+
+.chatbox .chat-body .bubble {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+}
+
+.chatbox .chat-body .bubble p {
+    color: #000;
+    font-size: 14px;
+    text-align: left;
+    line-height: 1.4;
+}
+
+.chatbox .chat-body .incoming {
+    display: flex;
+    justify-content: left;
+}
+
+.chatbox .chat-body .incoming .bubble {
+    background-color: #F0F0F0;
+}
+
+.chatbox .chat-body .outgoing {
+    display: flex;
+    justify-content: end;
+}
+
+.chatbox .chat-body .outgoing .bubble {
+    background-color: #D9D9D9;
+}
+
+.chatbox .foot {
+    display: flex;
+}
+
+.chatbox .foot .msg {
+    flex-grow: 1;
+}
+
+.chatbox .input-box {
+    width: 100%;
+    padding: 6px 40px;
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+}
+
+.chat-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px; /* Adjust spacing */
+}
+
+.send {
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    margin-left: 10px; /* Adjust spacing */
+}
+
+.input-box {
+    width: 80%; /* Adjust width to make room for the icons */
+    display: inline-block;
+    vertical-align: middle;
+}
+
