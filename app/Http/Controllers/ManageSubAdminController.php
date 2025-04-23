@@ -24,7 +24,7 @@ class ManageSubAdminController extends Controller
     {
         $sub_admins_module = ManageModule::latest()->get();
         // return $sub_admins_module;
-        $sub_admins_data = IamPrincipal::where('principal_type_xid', 3)->latest()->get();
+        $sub_admins_data = IamPrincipal::where('principal_type_xid', 2)->latest()->get();// 2 for subadmin
 
         return view('Admin.sub_admin.manage_subadmin', compact('sub_admins_data', 'sub_admins_module'));
     }
@@ -59,7 +59,7 @@ class ManageSubAdminController extends Controller
 
             $sub_admin = new IamPrincipal();
             $sub_admin->name = $request->input('sub_admin_name');
-            $sub_admin->principal_type_xid = 3;
+            $sub_admin->principal_type_xid = 2;// 2 for subadmin
             $sub_admin->email_address = $request->input('sub_admin_email');
             $sub_admin->password = bcrypt($request->input('password'));
             $sub_admin->save();
@@ -102,7 +102,7 @@ class ManageSubAdminController extends Controller
         $loginAdmin = auth()->guard('admin')->user();
         $dataAdmin = SubadminContactAdmin::where('sender_id', $loginAdmin->id)->where('receiver_id', $iamprinciapl->id)->get();
         $messages = $dataAdmin->sortBy('created_at');
-        $affiliate_user = IamPrincipal::where('principal_type_xid', 3)->find($id);
+        $affiliate_user = IamPrincipal::where('principal_type_xid', 2)->find($id); // 2 for subadmin
         return view('Admin.sub_admin.subadmin_users_mail', compact('messages', 'affiliate_user'));
     }
 
