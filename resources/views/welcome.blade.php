@@ -134,7 +134,7 @@
         });
 
         $(document).ready(function() {
-           
+
 
             $(document).ready(function() {
                 $('<button><a class="extra-btn width-max-content" href="{{ route('add_user') }}">Add</a></button><button><ul class="navbar-item flex-row ms-lg-auto ms-0"><li class="nav-item dropdown action-dropdown  order-lg-0 order-1"><a href="javascript:void(0);"class="nav-link dropdown-toggle user extra-btn" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><div class="avatar-container"><div class="avatar avatar-sm avatar-indicators avatar-online"><h3>Export</h3></div></div></a><div class="dropdown-menu position-absolute" aria-labelledby="actionDropdown"><div class="dropdown-item"><a href="javascript:void(0)" id="download_all"><span>Download Overview</span></a></div><div class="dropdown-item"><a href="javascript:void(0)" id="download-selected"><span id="export">Download Selected</span></a></div></div></li></ul></button>')

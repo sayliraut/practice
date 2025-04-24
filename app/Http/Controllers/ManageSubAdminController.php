@@ -24,7 +24,7 @@ class ManageSubAdminController extends Controller
     {
         $sub_admins_module = ManageModule::latest()->get();
         // return $sub_admins_module;
-        $sub_admins_data = IamPrincipal::where('principal_type_xid', 2)->latest()->get();// 2 for subadmin
+        $sub_admins_data = IamPrincipal::where('principal_type_xid', 2)->latest()->get(); // 2 for subadmin
 
         return view('Admin.sub_admin.manage_subadmin', compact('sub_admins_data', 'sub_admins_module'));
     }
@@ -53,24 +53,24 @@ class ManageSubAdminController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-
         try {
             DB::beginTransaction();
 
             $sub_admin = new IamPrincipal();
             $sub_admin->name = $request->input('sub_admin_name');
-            $sub_admin->principal_type_xid = 2;// 2 for subadmin
+            $sub_admin->principal_type_xid = 2; // 2 for subadmin
             $sub_admin->email_address = $request->input('sub_admin_email');
             $sub_admin->password = bcrypt($request->input('password'));
             $sub_admin->save();
 
             $moduleIds = $request->input('module_id');
-
-            foreach ($moduleIds as $moduleId) {
-                $sub_admin_permission = new ManageModuleLink;
-                $sub_admin_permission->principal_xid = $sub_admin->id;
-                $sub_admin_permission->manage_modules_xid = $moduleId;
-                $sub_admin_permission->save();
+            if (!empty($moduleIds)) {
+                foreach ($moduleIds as $moduleId) {
+                    $sub_admin_permission = new ManageModuleLink;
+                    $sub_admin_permission->principal_xid = $sub_admin->id;
+                    $sub_admin_permission->manage_modules_xid = $moduleId;
+                    $sub_admin_permission->save();
+                }
             }
 
             $mailData = [

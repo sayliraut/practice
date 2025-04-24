@@ -54,7 +54,7 @@ class IamPrincipal extends Authenticatable
 
     public function getPermissionGranted($id, $module)
     {
-        $isSubAdmin = IamPrincipal::where('id', $id)->where('principal_type_xid', 3)->first();
+        $isSubAdmin = IamPrincipal::where('id', $id)->where('principal_type_xid', 2)->first();
 
         $isMainAdmin = IamPrincipal::where('id', $id)->where('principal_type_xid', 1)->first();
         if ($isMainAdmin) {

@@ -24,7 +24,7 @@ class DashboardController extends Controller
     public function index()
     {
         try {
-            $users = IamPrincipal::with(['state', 'city'])->where('principal_type_xid', 2)->latest()->get();
+            $users = IamPrincipal::with(['state', 'city'])->where('principal_type_xid', 3)->latest()->get();
             return view('welcome', compact('users'));
         } catch (Exception $e) {
             Log::error("Dashboard Page Load Failed: " . $e->getMessage());
@@ -73,7 +73,7 @@ class DashboardController extends Controller
             $user->city_xid = $request['city_xid'];
             $user->email_address = $request['email'];
             $user->phone_number = $request['mobile'];
-            $user->principal_type_xid = 2;
+            $user->principal_type_xid = 3; // Assuming 3 is for user
 
             // Save the profile image
             if ($request->hasFile('image')) {

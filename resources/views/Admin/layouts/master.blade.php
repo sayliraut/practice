@@ -48,7 +48,7 @@
         <img src="{{ asset('public/assets/img/logo.png') }}" class="logo" alt="">
         <h3 class="hide">Practice</h3>
     </div>
-    <div class="sidebar-links" style="overflow: scroll;">
+    <div class="sidebar-links" >
         <ul>
             <div class="active-tab"></div>
 
@@ -70,7 +70,7 @@
 
         </ul>
     </div>
-    <div class="sidebar-links" style="overflow: scroll;">
+    <div class="sidebar-links" >
         <ul>
             <div class="active-tab"></div>
             @if (Auth::guard('admin')->user()->getPermissionGranted(Auth::guard('admin')->user()->id, 'sub-admins'))
@@ -90,10 +90,10 @@
         </ul>
     </div>
 
-    <div class="sidebar-links" style="overflow: scroll;">
+    <div class="sidebar-links" >
         <ul>
             <div class="active-tab"></div>
-            {{-- @if (Auth::guard('admin')->user()->getPermissionGranted(Auth::guard('admin')->user()->id, 'sub-admins')) --}}
+            {{-- @if (Auth::guard('admin')->user()->getPermissionGranted(Auth::guard('admin')->user()->id, 'admin')) --}}
             <li class="tooltip-element <?php
             if ($currentPage == 'contact-admin') {
                 echo 'active';
@@ -133,7 +133,7 @@
     $(document).ready(function() {
         $('#manageUsersButton').click(function() {
             $('#usersDropdownContent').toggle();
-            $('#arrowIcon').toggleClass('fa-angle-down fa-angle-up'); 
+            $('#arrowIcon').toggleClass('fa-angle-down fa-angle-up');
         });
     });
 </script>
