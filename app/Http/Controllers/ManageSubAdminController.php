@@ -112,40 +112,40 @@ class ManageSubAdminController extends Controller
         return view('Admin.sub_admin.subadmin_users_mail', compact('messages', 'affiliate_user'));
     }
 
-    public function submitSubadminResponse(Request $request)
-    {
-        dd($request->all());
-        try {
-            DB::beginTransaction();
-            $loginAdmin = auth()->guard('admin')->user();
-            $contactAdminResponse = new SubadminContactAdmin();
-            $contactAdminResponse->sender_id = $loginAdmin->id;
-            $contactAdminResponse->receiver_id = $request->receiver_id;
-            $contactAdminResponse->contact_admin_response = $request->contact_admin_response;
-            $contactAdminResponse->is_admin_response = 1;
-            $contactAdminResponse->save();
-            DB::commit();
-            return jsonResponseWithSuccessMessage(__('success.save_data'));
-        } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error("Affiliate response controller function failed " . $e->getMessage());
-            return jsonResponseWithErrorMessage(__('auth.something_went_wrong'), 500);
-        }
-    }
+    // public function submitSubadminResponse(Request $request)
+    // {
+    //     dd($request->all());
+    //     try {
+    //         DB::beginTransaction();
+    //         $loginAdmin = auth()->guard('admin')->user();
+    //         $contactAdminResponse = new SubadminContactAdmin();
+    //         $contactAdminResponse->sender_id = $loginAdmin->id;
+    //         $contactAdminResponse->receiver_id = $request->receiver_id;
+    //         $contactAdminResponse->contact_admin_response = $request->contact_admin_response;
+    //         $contactAdminResponse->is_admin_response = 1;
+    //         $contactAdminResponse->save();
+    //         DB::commit();
+    //         return jsonResponseWithSuccessMessage(__('success.save_data'));
+    //     } catch (\Exception $e) {
+    //         DB::rollBack();
+    //         Log::error("Affiliate response controller function failed " . $e->getMessage());
+    //         return jsonResponseWithErrorMessage(__('auth.something_went_wrong'), 500);
+    //     }
+    // }
 
 
     public function contactAdmin()
     {
         $loginAdmin = auth()->guard('admin')->user();
 
-        $iamprinciapl = IamPrincipal::find($loginAdmin->id);
+        // $iamprinciapl = IamPrincipal::find($loginAdmin->id);
         $admin_user = IamPrincipal::where('principal_type_xid', 1)->first();
-        $dataAdmin = SubadminContactAdmin::where(function ($query) use ($loginAdmin, $iamprinciapl) {
+        $dataAdmin = SubadminContactAdmin::where(function ($query) use ($loginAdmin, $admin_user) {
             $query->where('sender_id', $loginAdmin->id)
                 ->orWhere('receiver_id', $loginAdmin->id);
-        })->where(function ($query) use ($iamprinciapl) {
-            $query->where('sender_id', $iamprinciapl->id)
-                ->orWhere('receiver_id', $iamprinciapl->id);
+        })->where(function ($query) use ($admin_user) {
+            $query->where('sender_id', $admin_user->id)
+                ->orWhere('receiver_id', $admin_user->id);
         })->get();
         $messages = $dataAdmin->sortBy('created_at');
 

@@ -23,7 +23,7 @@
                 <div class="col-xl-12 col-lg-12 col-sm-12 layout-spacing chatbox">
                     <div class="widget-content widget-content-area br-8 position-btn">
                         <div class="d-flex justify-content-between mb-3">
-                            <h6 class="card-title">Contact Admin</h6>
+                            <h6 class="card-title">Contact Subadmin</h6>
                         </div>
 
                         <div class="chat_box">
