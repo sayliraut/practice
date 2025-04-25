@@ -17,7 +17,7 @@ class checkStatus
     {
         $admin = auth()->guard('admin')->user();
 
-        if ($admin && $admin->is_active == 1 && ($admin->principal_type_xid == 1 || $admin->principal_type_xid == 3)) {
+        if ($admin && $admin->is_active == 1 && ($admin->principal_type_xid == 1 || $admin->principal_type_xid == 2)) { // 1 for admin, 2 for subadmin
             return $next($request);
         } else {
             return redirect('/')->with('error_msg', 'You must be logged in..');

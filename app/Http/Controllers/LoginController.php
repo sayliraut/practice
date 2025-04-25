@@ -23,7 +23,7 @@ class LoginController extends Controller
 
 
         $user = IamPrincipal::where('email_address', $validatedData['email'])
-            ->whereIn('principal_type_xid', [1, 3])
+            ->whereIn('principal_type_xid', [1, 2]) // 1 for admin, 2 for subadmin
             ->first();
 
         if ($user) {

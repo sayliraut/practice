@@ -50,9 +50,7 @@ Route::group(['middleware' => ['checkStatus']], function () {
     Route::POST('/submit-subadmin-users-mail', [ManageSubAdminController::class, 'submitSubadminResponse'])->name('submit-subadmin-users-mail');
 
 
-        //******************************************************* subadmin chat module********************************************************
-        Route::get('/subadmin-contact-admin', [ManageSubAdminController::class, 'contactAdmin'])->name('subadmin.contact.admin');
-        Route::POST('/submit-subadmin-contact-admin', [ManageSubAdminController::class, 'submitSubAdminContactAdminResponse'])->name('submit-subadmin-contact-admin');
-
-
+    //******************************************************* subadmin chat module********************************************************
+    Route::get('/subadmin-contact-admin', [ManageSubAdminController::class, 'contactAdmin'])->name('subadmin.contact.admin');
+    Route::POST('/submit-subadmin-contact-admin', [ManageSubAdminController::class, 'submitSubAdminContactAdminResponse'])->name('submit-subadmin-contact-admin');
 });

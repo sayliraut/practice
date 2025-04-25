@@ -15,13 +15,9 @@ return new class extends Migration
             $table->id();
             $table->integer('sender_id')->nullable();
             $table->integer('receiver_id')->nullable();
-            $table->string('contact_admin_response')->nullable();
-            $table->boolean('is_admin_response')->default(0);
-            $table->boolean('is_subadmin_response')->default(0);
-            $table->string('subadmin_response')->nullable();
+            $table->string('message')->nullable();
             $table->boolean('is_active')->default(1)->comment('1=Active, 0=Expired');
             $table->integer('created_by')->nullable();
-            $table->integer('modified_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

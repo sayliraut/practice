@@ -6,7 +6,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item dropdown user">
-                        <a class="nav-link dropdown-toggle" href="{{route('profile')}}">
+                        <a class="nav-link dropdown-toggle" href="{{ route('profile') }}">
                             <div class="avatar-container">
                                 <div class="avatar avatar-sm avatar-indicators avatar-online">
                                     @php
@@ -48,65 +48,63 @@
         <img src="{{ asset('public/assets/img/logo.png') }}" class="logo" alt="">
         <h3 class="hide">Practice</h3>
     </div>
-    <div class="sidebar-links" >
+    <div class="sidebar-links">
         <ul>
             <div class="active-tab"></div>
 
             @if (Auth::guard('admin')->user()->getPermissionGranted(Auth::guard('admin')->user()->id, 'dashboard'))
-
-            <li class="tooltip-element <?php
-            if ($currentPage == 'dashboard') {
-                echo 'active';
-            }
-            ?>" data-tooltip="0">
-                <a href="{{ route('index') }}" data-active="0">
-                    <div class="icons">
-                        <img src="{{ asset('public/assets/img/dashboard.svg') }}" />
-                        <span class="text">Dashboard</span>
-                    </div>
-                </a>
-            </li>
+                <li class="tooltip-element <?php
+                if ($currentPage == 'dashboard') {
+                    echo 'active';
+                }
+                ?>" data-tooltip="0">
+                    <a href="{{ route('index') }}" data-active="0">
+                        <div class="icons">
+                            <img src="{{ asset('public/assets/img/dashboard.svg') }}" />
+                            <span class="text">Dashboard</span>
+                        </div>
+                    </a>
+                </li>
             @endif
 
         </ul>
     </div>
-    <div class="sidebar-links" >
+    <div class="sidebar-links">
         <ul>
             <div class="active-tab"></div>
-            @if (Auth::guard('admin')->user()->getPermissionGranted(Auth::guard('admin')->user()->id, 'sub-admins'))
-            <li class="tooltip-element <?php
-            if ($currentPage == 'sub-admins') {
-                echo 'active';
-            }
-            ?>" data-tooltip="0">
-                <a href="{{ route('manage.subAdmin') }}" data-active="0">
-                    <div class="icons">
-                        <img src="{{ asset('public/assets/img/Group 57904.svg') }}" />
-                        <span class="text">Sub Admins</span>
-                    </div>
-                </a>
-            </li>
+            @if (Auth::guard('admin')->user()->principal_type_xid != 2)
+                <li class="tooltip-element <?php
+                if ($currentPage == 'sub-admins') {
+                    echo 'active';
+                }
+                ?>" data-tooltip="0">
+                    <a href="{{ route('manage.subAdmin') }}" data-active="0">
+                        <div class="icons">
+                            <img src="{{ asset('public/assets/img/Group 57904.svg') }}" />
+                            <span class="text">Sub Admins</span>
+                        </div>
+                    </a>
+                </li>
             @endif
         </ul>
     </div>
-
-    <div class="sidebar-links" >
+    <div class="sidebar-links">
         <ul>
             <div class="active-tab"></div>
-            {{-- @if (Auth::guard('admin')->user()->getPermissionGranted(Auth::guard('admin')->user()->id, 'admin')) --}}
-            <li class="tooltip-element <?php
-            if ($currentPage == 'contact-admin') {
-                echo 'active';
-            }
-            ?>" data-tooltip="0">
-                <a href="{{ route('subadmin.contact.admin') }}" data-active="0">
-                    <div class="icons">
-                        <img src="{{ asset('public/assets/img/Group 57904.svg') }}" />
-                        <span class="text">Contact Admin</span>
-                    </div>
-                </a>
-            </li>
-            {{-- @endif --}}
+            @if (Auth::guard('admin')->user()->principal_type_xid != 1)
+                <li class="tooltip-element <?php
+                if ($currentPage == 'contact-admin') {
+                    echo 'active';
+                }
+                ?>" data-tooltip="0">
+                    <a href="{{ route('subadmin.contact.admin') }}" data-active="0">
+                        <div class="icons">
+                            <img src="{{ asset('public/assets/img/Group 57904.svg') }}" />
+                            <span class="text">Contact Admin</span>
+                        </div>
+                    </a>
+                </li>
+            @endif
         </ul>
     </div>
 

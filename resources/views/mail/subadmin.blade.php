@@ -177,7 +177,7 @@
                               background-color: #fcf6e4;
                             ">
                                                     <div class="mktEditable" id="main_title">
-                                                     
+
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -207,15 +207,10 @@
                                                         <p>You can now log in to your sub-admin dashboard to access your
                                                             account .</p>
 
-                                                        <p>Please click on the link below to access your dashboard:</p>
-                                                        <p><a
-                                                                href="https://ctts.betadelivery.com">https://ctts.betadelivery.com</a>
-                                                        </p>
-
                                                         <p>If you have any questions or need further assistance, please
                                                             feel free to contact us.</p>
 `
-                                                        <p>Best regards,<br> Cheers to the session</p>
+                                                        <p>Best regards,<br>Sayli Raut</p>
                                                     </div>
                                                 </td>
                                             </tr>

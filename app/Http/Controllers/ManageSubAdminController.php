@@ -100,7 +100,13 @@ class ManageSubAdminController extends Controller
     {
         $iamprinciapl = IamPrincipal::find($id);
         $loginAdmin = auth()->guard('admin')->user();
-        $dataAdmin = SubadminContactAdmin::where('sender_id', $loginAdmin->id)->where('receiver_id', $iamprinciapl->id)->get();
+        $dataAdmin = SubadminContactAdmin::where(function ($query) use ($loginAdmin, $iamprinciapl) {
+            $query->where('sender_id', $loginAdmin->id)
+                ->orWhere('receiver_id', $loginAdmin->id);
+        })->where(function ($query) use ($iamprinciapl) {
+            $query->where('sender_id', $iamprinciapl->id)
+                ->orWhere('receiver_id', $iamprinciapl->id);
+        })->get();
         $messages = $dataAdmin->sortBy('created_at');
         $affiliate_user = IamPrincipal::where('principal_type_xid', 2)->find($id); // 2 for subadmin
         return view('Admin.sub_admin.subadmin_users_mail', compact('messages', 'affiliate_user'));
@@ -108,9 +114,8 @@ class ManageSubAdminController extends Controller
 
     public function submitSubadminResponse(Request $request)
     {
-
+        dd($request->all());
         try {
-
             DB::beginTransaction();
             $loginAdmin = auth()->guard('admin')->user();
             $contactAdminResponse = new SubadminContactAdmin();
@@ -135,7 +140,13 @@ class ManageSubAdminController extends Controller
 
         $iamprinciapl = IamPrincipal::find($loginAdmin->id);
         $admin_user = IamPrincipal::where('principal_type_xid', 1)->first();
-        $dataAdmin = SubadminContactAdmin::where('sender_id', $admin_user->id)->where('receiver_id', $iamprinciapl->id)->get();
+        $dataAdmin = SubadminContactAdmin::where(function ($query) use ($loginAdmin, $iamprinciapl) {
+            $query->where('sender_id', $loginAdmin->id)
+                ->orWhere('receiver_id', $loginAdmin->id);
+        })->where(function ($query) use ($iamprinciapl) {
+            $query->where('sender_id', $iamprinciapl->id)
+                ->orWhere('receiver_id', $iamprinciapl->id);
+        })->get();
         $messages = $dataAdmin->sortBy('created_at');
 
         return view("Admin.sub_admin.contact_admin", compact('messages', 'admin_user'));
@@ -144,18 +155,15 @@ class ManageSubAdminController extends Controller
 
     public function submitSubAdminContactAdminResponse(Request $request)
     {
-
-        // dd($request->all());
-
         try {
             DB::beginTransaction();
             // $loginAdminUser = auth()->guard('admin')->user();
             $loginAdmin = auth()->guard('admin')->user();
             $contactAdminResponse = new SubadminContactAdmin();
-            $contactAdminResponse->sender_id = $request->sender_id;
-            $contactAdminResponse->receiver_id = $loginAdmin->id;
-            $contactAdminResponse->affiliate_response = $request->affiliate_response;
-            $contactAdminResponse->is_affiliate_response = 0;
+            $contactAdminResponse->sender_id = $loginAdmin->id;
+            $contactAdminResponse->receiver_id = $request->receiver_id;
+            $contactAdminResponse->message = $request->message;
+            $contactAdminResponse->created_by = $loginAdmin->id;
             $contactAdminResponse->save();
             DB::commit();
             return jsonResponseWithSuccessMessage(__('success.save_data'));
