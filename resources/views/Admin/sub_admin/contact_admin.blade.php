@@ -39,7 +39,7 @@
 
                             <div class="chat-body">
                                 @foreach ($messages as $chatmessage)
-                                    @if ($adminUser->id == $chatmessage->sender_id && !empty($chatmessage->message))
+                                    @if ($adminUser->id == $chatmessage->receiver_id && !empty($chatmessage->message))
                                         <div class="incoming pt-3">
                                             <div class="bubble mb-n3">
                                                 <p>{{ $chatmessage->message }}</p>
