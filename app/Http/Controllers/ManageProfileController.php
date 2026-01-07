@@ -48,13 +48,9 @@ class ManageProfileController extends Controller
 
             // Check if a new profile photo is provided
             if ($request->hasFile('profile_photo')) {
-                // Get the file
                 $image = $request->file('profile_photo');
-
                 $imageFilename = saveSingleImageWithoutCrop($image, 'admin_images', $user->profile_photo);
-
                 $user->profile_photo = $imageFilename;
-
             }
 
             $user->save();
