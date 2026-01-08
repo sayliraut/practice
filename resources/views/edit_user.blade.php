@@ -2,7 +2,21 @@
 @section('content')
     @php
         $currentPage = 'User';
-    @endphp<html>
+    @endphp
+        <style>
+        .error-message {
+            color: #FF0000;
+        }
+
+        form .error-message {
+            color: red;
+        }
+
+        form .input_class.error-message {
+            color: #0e1726;
+        }
+    </style>
+    <html>
 
     <div class="layout-px-spacing">
         <div class="middle-content container-xxl p-0">

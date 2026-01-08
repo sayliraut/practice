@@ -3,6 +3,17 @@
     @php
         $currentPage = 'User';
     @endphp
+        <style>
+        .error-message {
+            color: #FF0000;
+        }
+        form .error-message {
+            color: red;
+        }
+        form .input_class.error-message {
+            color: #0e1726;
+        }
+    </style>
     <div class="layout-px-spacing">
         <div class="middle-content container-xxl p-0">
             <div class="row layout-top-spacing ">
