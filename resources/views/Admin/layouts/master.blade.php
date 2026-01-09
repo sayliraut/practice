@@ -107,6 +107,25 @@
             @endif
         </ul>
     </div>
+     <div class="sidebar-links">
+        <ul>
+            <div class="active-tab"></div>
+            @if (Auth::guard('admin')->user()->principal_type_xid != 2)
+                <li class="tooltip-element <?php
+                if ($currentPage == 'faq') {
+                    echo 'active';
+                }
+                ?>" data-tooltip="0">
+                    <a href="{{ route('faq.list') }}" data-active="0">
+                        <div class="icons">
+                            <img src="{{ asset('public/assets/img/article 1.svg') }}" />
+                            <span class="text">FAQ</span>
+                        </div>
+                    </a>
+                </li>
+            @endif
+        </ul>
+    </div>
 
 </nav>
 <!-- BEGIN LOADER -->

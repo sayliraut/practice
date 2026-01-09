@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ManageProfileController;
 use App\Http\Controllers\ManageSubAdminController;
@@ -53,4 +54,8 @@ Route::group(['middleware' => ['checkStatus']], function () {
     //******************************************************* subadmin chat module********************************************************
     Route::get('/subadmin-contact-admin', [ManageSubAdminController::class, 'contactAdmin'])->name('subadmin.contact.admin');
     Route::POST('/submit-subadmin-contact-admin', [ManageSubAdminController::class, 'submitSubAdminContactAdminResponse'])->name('submit-subadmin-contact-admin');
+
+    Route::get('/faq', [FaqController::class, 'index'])->name('faq.list');
+
+
 });
