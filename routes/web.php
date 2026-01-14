@@ -56,6 +56,7 @@ Route::group(['middleware' => ['checkStatus']], function () {
     Route::POST('/submit-subadmin-contact-admin', [ManageSubAdminController::class, 'submitSubAdminContactAdminResponse'])->name('submit-subadmin-contact-admin');
 
     Route::get('/faq', [FaqController::class, 'index'])->name('faq.list');
+    Route::get('/add-faq', [FaqController::class, 'create'])->name('faq.create');
 
 
 });
