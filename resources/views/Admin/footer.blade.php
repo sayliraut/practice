@@ -31,7 +31,7 @@
 <script src="{{ asset('public/assets/plgins/src/filepond/FilePondPluginImageTransform.min.js')}}"></script>
 <script src="{{ asset('public/assets/plugins/src/filepond/filepondPluginFileValidateSize.min.js')}}"></script>
 <script src="{{ asset('public/assets/plugins/src/filepond/custom-filepond.js')}}"></script>
-        <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/47.3.0/classic/ckeditor.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>-->

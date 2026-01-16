@@ -57,6 +57,7 @@ Route::group(['middleware' => ['checkStatus']], function () {
 
     Route::get('/faq', [FaqController::class, 'index'])->name('faq.list');
     Route::get('/add-faq', [FaqController::class, 'create'])->name('faq.create');
+    Route::post('/insert-faq', [FaqController::class, 'store']);
 
 
 });
